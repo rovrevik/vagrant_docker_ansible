@@ -10,7 +10,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # please see the online documentation at vagrantup.com.
 
   # Every Vagrant virtual environment requires a box to build off of.
-  config.vm.box = "base"
+  # From https://docs.vagrantup.com/v2/docker/basics.html
+  # The Docker provider does not require a config.vm.box setting. Since the
+  # "base image" for a Docker container is pulled from the Docker Index or
+  # built from a Dockerfile, the box doesn't add much value, and is optional
+  # for this provider
+  # config.vm.box = "base"
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
