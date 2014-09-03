@@ -15,7 +15,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # "base image" for a Docker container is pulled from the Docker Index or
   # built from a Dockerfile, the box doesn't add much value, and is optional
   # for this provider
+  # While optional, provide an example realistic value.
   # config.vm.box = "base"
+  # config.vm.box = "ubuntu/trusty64"
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
