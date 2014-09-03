@@ -128,6 +128,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   #   chef.validation_client_name = "ORGNAME-validator" 
   
   config.vm.provider "docker" do |d|
-    d.image = "ubuntu"
+    d.image = "ubuntu:14.04.1"
   end
 end
