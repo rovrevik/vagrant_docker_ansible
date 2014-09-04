@@ -10,15 +10,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # please see the online documentation at vagrantup.com.
 
   # Every Vagrant virtual environment requires a box to build off of.
-  # From https://docs.vagrantup.com/v2/docker/boxes.html, 
-  #   https://docs.vagrantup.com/v2/docker/basics.html
-  # The Docker provider does not require a config.vm.box setting. Since the
-  # "base image" for a Docker container is pulled from the Docker Index or
-  # built from a Dockerfile, the box doesn't add much value, and is optional
-  # for this provider
-  # While optional, provide an example realistic value.
   # config.vm.box = "base"
-  # config.vm.box = "ubuntu/trusty64"
+  config.vm.box = "phusion/ubuntu-14.04-amd64"
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
@@ -128,102 +121,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   #
   #   chef.validation_client_name = "ORGNAME-validator" 
   
-  # config.vm.define "app" do |v|
-  #   v.vm.provider "docker" do |d|
-  #     d.name = "app"
-  #     d.image = "ubuntu:14.04.1"
-  #     d.remains_running = true
-  #   end
-  #   v.vm.network :forwarded_port, guest: 2375, host: 2376
-  #   v.vm.network :forwarded_port, guest: 22, host: 23
-  # end
-
-  # config.vm.define "repo" do |v|
-  #   v.vm.provider "docker" do |d|
-  #     d.name = "repo"
-  #     d.image = "ubuntu:14.04.1"
-  #     d.remains_running = true
-  #   end
-  #   v.vm.network :forwarded_port, guest: 2375, host: 2377
-  #   v.vm.network :forwarded_port, guest: 22, host: 23
-  # end
-
-  # config.vm.define "db" do |v|
-  #   v.vm.provider "docker" do |d|
-  #     d.name = "db"
-  #     d.image = "ubuntu:14.04.1"
-  #     d.remains_running = true
-  #   end
-  #   v.vm.network :forwarded_port, guest: 2375, host: 2378
-  #   v.vm.network :forwarded_port, guest: 22, host: 23
-  # end
-
-  # config.vm.define "DockerHostX" do |v| 
-  #   v.vm.provider "docker" do |d|
-  #     d.name = "DockerHostX"
-  #     d.image = "ubuntu:14.04.1"
-  #     d.has_ssh = true
-  #     d.vagrant_machine = "DockerHostx"
-  #     d.remains_running = true
-  #     # d.vagrant_vagrantfile = "./docker/Vagrantfile"
-  #   end
-  # end
-
-  # This needs to be here to prevent a separate virtualbox vm being created for each defined vm
-  # config.vm.provider "docker" do |d|
-  #   d.image = "phusion/baseimage"
-  #   d.vagrant_vagrantfile = "./docker/Vagrantfile"
-  # end
-
-  config.ssh.username = "root"
-
-  config.vm.define :app do |v|
-    v.vm.provider :docker do |d|
-      # d.name = "app"
-      # d.image = "phusion/baseimage"
-      d.image = "ubuntu:14.04.1"
-      # d.vagrant_vagrantfile = "./docker/Vagrantfile"
-      # d.has_ssh = true
-      d.remains_running = false
-    end
-    v.vm.network :forwarded_port, guest: 2375, host: 2376
-    # v.vm.provision "docker" do |d|
-    #   d.run "phusion/baseimage", cmd: "/bin/bash"
-    # end
+  config.vm.provision "docker" do |d|
+    d.images = ["phusion/baseimage"]
   end
 
-  config.vm.define :repo do |v|
-    v.vm.provider :docker do |d|
-      # d.name = "repo"
-      # d.image = "phusion/baseimage"
-      d.image = "ubuntu:14.04.1"
-      # d.vagrant_vagrantfile = "./docker/Vagrantfile"
-      # d.has_ssh = true
-      d.remains_running = false
-    end
-    v.vm.network :forwarded_port, guest: 2375, host: 2377
-    # v.vm.provision :docker do |d|
-    #   d.run "phusion/baseimage", cmd: "/bin/bash"
-    # end
-  end
-
-  config.vm.define "db" do |v|
-    v.vm.provider "docker" do |d|
-      # d.name = "db"
-      # d.image = "phusion/baseimage"
-      d.image = "ubuntu:14.04.1"
-      # d.vagrant_vagrantfile = "./docker/Vagrantfile"
-      # d.has_ssh = true
-      d.remains_running = false
-    end
-    v.vm.network :forwarded_port, guest: 2375, host: 2378
-    # v.vm.provision "docker" do |d|
-    #   d.run "phusion/baseimage", cmd: "/bin/bash"
-    # end
-  end
-
-  # config.vm.provider "docker" do |d|
-  #   d.image = "ubuntu:14.04.1"
-  #   d.vagrant_vagrantfile = "./docker/Vagrantfile"
-  # end
+  # config.vm.provision "docker"
+  # config.vm.provision "shell", inline: "ps aux | grep 'sshd:' | awk '{print $2}' | xargs kill"
+  # config.vm.network :forwarded_port, guest: 8000, host: 8000
 end
